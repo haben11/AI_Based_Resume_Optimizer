@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .accent-text { color: {{ config.color }}; }
+        .accent-bg { background-color: {{ config.color }}; }
+        .accent-border { border-color: {{ config.color }}; }
+        @media print { body { -webkit-print-color-adjust: exact; } }
+        .page-break { page-break-after: always; }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: {{ config.color }};
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900 p-0 m-0 antialiased">
+    <div class="max-w-[900px] mx-auto min-h-screen bg-white">
+        <!-- Luxury Header -->
+        <header class="p-16 text-center border-b border-slate-100">
+            <h1 class="serif text-5xl font-black tracking-tight text-slate-900 mb-4">{{ data.full_name }}</h1>
+            <div class="flex justify-center items-center gap-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-400">
+                <span>{{ data.contact_info.email }}</span>
+                <span class="w-1 h-1 rounded-full accent-bg opacity-50"></span>
+                <span>{{ data.contact_info.phone }}</span>
+                {% if data.contact_info.location %}
+                <span class="w-1 h-1 rounded-full accent-bg opacity-50"></span>
+                <span>{{ data.contact_info.location }}</span>
+                {% endif %}
+            </div>
+        </header>
+
+        <div class="p-16 space-y-16">
+            <!-- Executive Summary -->
+            {% if data.summary %}
+            <section>
+                <h2 class="serif text-2xl font-bold text-slate-900 mb-6 section-title">Executive Profile</h2>
+                <p class="text-slate-600 leading-relaxed text-lg font-light italic">"{{ data.summary }}"</p>
+            </section>
+            {% endif %}
+
+            <!-- Professional Experience -->
+            <section>
+                <h2 class="serif text-2xl font-bold text-slate-900 mb-10 section-title">Professional Trajectory</h2>
+                <div class="space-y-12">
+                    {% for job in data.experience %}
+                    <div class="group">
+                        <div class="flex justify-between items-baseline mb-4">
+                            <div>
+                                <h3 class="serif text-xl font-bold text-slate-900">{{ job.title }}</h3>
+                                <p class="text-xs font-bold uppercase tracking-widest accent-text mt-1">{{ job.company }}</p>
+                            </div>
+                            <span class="text-xs font-black text-slate-300 tabular-nums">{{ job.date }}</span>
+                        </div>
+                        <ul class="space-y-4">
+                            {% for bullet in job.bullets %}
+                            <li class="flex gap-4 text-slate-600 text-sm leading-relaxed">
+                                <span class="accent-text flex-shrink-0 text-lg mt-[-2px]">◈</span>
+                                <span>{{ bullet }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Skills Architecture -->
+            <section class="grid grid-cols-2 gap-12">
+                <div>
+                    <h2 class="serif text-2xl font-bold text-slate-900 mb-8 section-title">Core Competencies</h2>
+                    <div class="flex flex-wrap gap-3">
+                        {% for skill in data.skills %}
+                        <span class="px-4 py-2 bg-slate-50 text-slate-700 text-xs font-bold rounded-full border border-slate-100 uppercase tracking-tighter">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="serif text-2xl font-bold text-slate-900 mb-8 section-title">Education & Credentials</h2>
+                    <div class="space-y-6">
+                        {% for edu in data.education %}
+                        <div class="border-l-2 accent-border pl-4">
+                            <p class="text-sm font-bold text-slate-900">{{ edu }}</p>
+                            <p class="text-[10px] uppercase tracking-widest text-slate-400 font-black mt-1">Verified Credential</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+            {% if data.projects %}
+            <!-- Signature Projects -->
+            <section>
+                <h2 class="serif text-2xl font-bold text-slate-900 mb-10 section-title">Signature Projects</h2>
+                <div class="grid grid-cols-2 gap-8">
+                    {% for proj in data.projects %}
+                    <div class="p-8 border border-slate-100 rounded-3xl hover:shadow-xl transition-shadow bg-slate-50/30">
+                        <h3 class="serif text-lg font-bold text-slate-900 mb-3">{{ proj.title }}</h3>
+                        <ul class="space-y-2">
+                            {% for bullet in proj.bullets %}
+                            <li class="text-[11px] text-slate-500 leading-relaxed">• {{ bullet }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+        </div>
+
+        <footer class="p-16 border-t border-slate-50 text-center">
+            <p class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-200">End of Portfolio — {{ data.full_name }}</p>
+        </footer>
+    </div>
+</body>
+</html>

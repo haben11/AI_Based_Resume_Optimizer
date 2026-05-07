@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .accent-text { color: {{ config.color }}; }
+        .accent-bg { background-color: {{ config.color }}; }
+        .accent-border { border-color: {{ config.color }}; }
+        @media print { body { -webkit-print-color-adjust: exact; } }
+    </style>
+</head>
+<body class="bg-white text-slate-900 p-0 m-0">
+    <div class="max-w-[850px] mx-auto p-10">
+        <header class="border-b-4 accent-border pb-6 mb-8 flex justify-between items-end">
+            <div>
+                <h1 class="text-4xl font-extrabold tracking-tighter uppercase mb-1">{{ data.full_name }}</h1>
+                <div class="flex gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    {% for key, val in data.contact_info.items() %}
+                    <span>{{ val }}</span>
+                    {% if not loop.last %}<span>•</span>{% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-12 gap-8">
+            <div class="col-span-8 space-y-8">
+                <section>
+                    <h2 class="text-xs font-black uppercase tracking-[0.2em] accent-text mb-4">Executive Summary</h2>
+                    <p class="text-sm text-slate-600 leading-relaxed">{{ data.summary }}</p>
+                </section>
+
+                <section>
+                    <h2 class="text-xs font-black uppercase tracking-[0.2em] accent-text mb-6">Experience History</h2>
+                    <div class="space-y-6">
+                        {% for job in data.experience %}
+                        <div>
+                            <div class="flex justify-between items-baseline mb-2">
+                                <h3 class="text-base font-bold text-slate-800">{{ job.title }}</h3>
+                            </div>
+                            <ul class="space-y-1.5 list-none">
+                                {% for bullet in job.bullets %}
+                                <li class="text-xs text-slate-600 flex gap-2">
+                                    <span class="accent-text mt-1">▪</span>
+                                    <span>{{ bullet }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-span-4 space-y-8">
+                <section class="bg-slate-50 p-6 rounded-xl">
+                    <h2 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Core Skills</h2>
+                    <div class="flex flex-wrap gap-2">
+                        {% for skill in data.skills %}
+                        <span class="text-[10px] font-bold text-slate-700 bg-white px-2 py-1 border border-slate-200 rounded-md shadow-sm">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="p-6">
+                    <h2 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Education</h2>
+                    <div class="space-y-4">
+                        {% for edu in data.education %}
+                        <p class="text-xs font-medium text-slate-600 leading-snug">{{ edu }}</p>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                {% if data.projects %}
+                <section class="p-6">
+                    <h2 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Key Projects</h2>
+                    <div class="space-y-4">
+                        {% for proj in data.projects %}
+                        <p class="text-xs font-bold text-slate-800 mb-1">{{ proj.title }}</p>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

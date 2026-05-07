@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        h1, h2, h3 { font-family: 'Crimson Pro', serif; }
+        body { font-family: 'Montserrat', sans-serif; }
+        .accent-text { color: {{ config.color }}; }
+        .accent-bg { background-color: {{ config.color }}; }
+        .accent-border { border-color: {{ config.color }}; }
+        @media print { body { -webkit-print-color-adjust: exact; } }
+    </style>
+</head>
+<body class="bg-white text-slate-900 p-0 m-0">
+    <div class="max-w-[800px] mx-auto p-16">
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-bold mb-4 tracking-tight">{{ data.full_name }}</h1>
+            <div class="flex justify-center flex-wrap gap-4 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                {% for key, val in data.contact_info.items() %}
+                <span>{{ val }}</span>
+                {% if not loop.last %}<span>•</span>{% endif %}
+                {% endfor %}
+            </div>
+        </header>
+
+        <section class="mb-10">
+            <h2 class="text-lg font-bold border-b-2 accent-border pb-1 mb-4">Professional Profile</h2>
+            <p class="text-sm text-slate-600 leading-relaxed text-justify italic">{{ data.summary }}</p>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-lg font-bold border-b-2 accent-border pb-1 mb-6">Expertise & Skills</h2>
+            <div class="flex flex-wrap gap-x-6 gap-y-2">
+                {% for skill in data.skills %}
+                <span class="text-xs font-semibold text-slate-700 flex items-center gap-2">
+                    <span class="w-1 h-1 accent-bg rounded-full"></span>
+                    {{ skill }}
+                </span>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-lg font-bold border-b-2 accent-border pb-1 mb-8">Career History</h2>
+            <div class="space-y-8">
+                {% for job in data.experience %}
+                <div>
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="text-base font-bold accent-text">{{ job.title }}</h3>
+                    </div>
+                    <ul class="space-y-2 list-disc pl-5">
+                        {% for bullet in job.bullets %}
+                        <li class="text-xs text-slate-600 leading-relaxed">{{ bullet }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="grid grid-cols-2 gap-12">
+            <section>
+                <h2 class="text-lg font-bold border-b-2 accent-border pb-1 mb-4">Education</h2>
+                <div class="space-y-3">
+                    {% for edu in data.education %}
+                    <p class="text-xs text-slate-700 font-bold">{{ edu }}</p>
+                    {% endfor %}
+                </div>
+            </section>
+            
+            {% if data.certifications %}
+            <section>
+                <h2 class="text-lg font-bold border-b-2 accent-border pb-1 mb-4">Accreditations</h2>
+                <div class="space-y-2">
+                    {% for cert in data.certifications %}
+                    <p class="text-xs text-slate-600">{{ cert }}</p>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

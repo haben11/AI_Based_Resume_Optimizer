@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .accent-text { color: {{ config.color }}; }
+        .accent-bg { background-color: {{ config.color }}; }
+        .accent-border { border-color: {{ config.color }}; }
+        @media print { body { -webkit-print-color-adjust: exact; } }
+    </style>
+</head>
+<body class="bg-white text-slate-800 p-0 m-0">
+    <div class="max-w-[850px] mx-auto grid grid-cols-12 min-h-screen">
+        <!-- Sidebar -->
+        <div class="col-span-4 accent-bg text-white p-12 space-y-12">
+            <header>
+                <h1 class="text-3xl font-bold uppercase mb-2">{{ data.full_name }}</h1>
+                <p class="text-xs font-light opacity-80 uppercase tracking-widest">Candidate Profile</p>
+            </header>
+
+            <section>
+                <h2 class="text-[10px] font-black uppercase tracking-[0.2em] mb-6 opacity-60">Contact</h2>
+                <div class="space-y-4 text-xs font-light">
+                    {% for key, val in data.contact_info.items() %}
+                    <p class="break-all">{{ val }}</p>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-[10px] font-black uppercase tracking-[0.2em] mb-6 opacity-60">Competencies</h2>
+                <div class="space-y-2">
+                    {% for skill in data.skills %}
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-light">{{ skill }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-[10px] font-black uppercase tracking-[0.2em] mb-6 opacity-60">Education</h2>
+                <div class="space-y-6">
+                    {% for edu in data.education %}
+                    <p class="text-xs font-light leading-relaxed">{{ edu }}</p>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-span-8 p-16 space-y-12">
+            <section>
+                <h2 class="text-sm font-bold uppercase tracking-[0.15em] accent-text mb-6">About</h2>
+                <p class="text-sm text-slate-500 leading-relaxed text-justify">{{ data.summary }}</p>
+            </section>
+
+            <section>
+                <h2 class="text-sm font-bold uppercase tracking-[0.15em] accent-text mb-8">Professional History</h2>
+                <div class="space-y-10">
+                    {% for job in data.experience %}
+                    <div class="relative pl-6 border-l-2 border-slate-100">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full accent-bg border-4 border-white shadow-sm"></div>
+                        <h3 class="text-base font-bold text-slate-800 mb-4">{{ job.title }}</h3>
+                        <ul class="space-y-3">
+                            {% for bullet in job.bullets %}
+                            <li class="text-xs text-slate-500 leading-relaxed">{{ bullet }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

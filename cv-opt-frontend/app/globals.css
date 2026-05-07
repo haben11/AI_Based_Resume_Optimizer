@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+@theme {
+  /* ─── COLOR PALETTE ─── */
+  --color-primary-50: oklch(0.97 0.01 260);
+  --color-primary-100: oklch(0.93 0.03 260);
+  --color-primary-200: oklch(0.86 0.06 260);
+  --color-primary-300: oklch(0.76 0.10 260);
+  --color-primary-400: oklch(0.65 0.17 260);
+  --color-primary-500: oklch(0.55 0.22 260);
+  --color-primary-600: oklch(0.48 0.22 260);
+  --color-primary-700: oklch(0.42 0.19 260);
+  --color-primary-800: oklch(0.35 0.15 260);
+  --color-primary-900: oklch(0.28 0.11 260);
+
+  --color-accent-400: oklch(0.78 0.18 160);
+  --color-accent-500: oklch(0.68 0.20 160);
+  --color-accent-600: oklch(0.58 0.18 160);
+
+  --color-surface-50: oklch(0.985 0.002 260);
+  --color-surface-100: oklch(0.97 0.004 260);
+  --color-surface-200: oklch(0.94 0.008 260);
+  --color-surface-700: oklch(0.30 0.02 260);
+  --color-surface-800: oklch(0.22 0.02 260);
+  --color-surface-900: oklch(0.16 0.02 260);
+  --color-surface-950: oklch(0.12 0.02 260);
+
+  --color-danger-500: oklch(0.62 0.22 25);
+  --color-warning-500: oklch(0.78 0.16 85);
+  --color-success-500: oklch(0.70 0.18 150);
+
+  /* ─── FONTS ─── */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ─── ANIMATION ─── */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-slide-up: slide-up 0.6s ease-out;
+  --animate-slide-down: slide-down 0.3s ease-out;
+  --animate-fade-in: fade-in 0.5s ease-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ─── BASE STYLES ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-surface-950);
+  color: var(--color-surface-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: oklch(0.55 0.22 260 / 0.4);
+  color: white;
+}
+
+/* ─── GLASS MORPHISM UTILITIES ─── */
+.glass {
+  background: oklch(0.16 0.02 260 / 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid oklch(1 0 0 / 0.08);
+}
+
+.glass-light {
+  background: oklch(0.98 0 0 / 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid oklch(0 0 0 / 0.06);
+}
+
+/* ─── GRADIENT UTILITIES ─── */
+.gradient-text {
+  background: linear-gradient(135deg, oklch(0.86 0.06 260), oklch(0.68 0.20 160), oklch(0.78 0.18 260));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+}
+
+.gradient-hero {
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.55 0.22 260 / 0.3), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 50%, oklch(0.68 0.20 160 / 0.12), transparent),
+              var(--color-surface-950);
+}
+
+.gradient-mesh {
+  background: 
+    radial-gradient(at 0% 0%, oklch(0.55 0.22 260 / 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, oklch(0.68 0.20 160 / 0.10) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, oklch(0.55 0.22 260 / 0.08) 0px, transparent 50%),
+    var(--color-surface-950);
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.4 0.05 260);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.5 0.08 260);
+}
+
+/* ─── MARKDOWN OUTPUT ─── */
+.markdown-output h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--color-surface-50); }
+.markdown-output h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; margin-top: 1.25rem; color: var(--color-primary-300); }
+.markdown-output h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.4rem; margin-top: 1rem; color: var(--color-primary-400); }
+.markdown-output p { margin-bottom: 0.6rem; line-height: 1.7; color: oklch(0.8 0.01 260); }
+.markdown-output ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0.6rem; }
+.markdown-output ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 0.6rem; }
+.markdown-output li { margin-bottom: 0.3rem; line-height: 1.6; color: oklch(0.78 0.01 260); }
+.markdown-output strong { color: var(--color-surface-50); font-weight: 600; }
+.markdown-output em { font-style: italic; color: oklch(0.75 0.03 260); }
+.markdown-output code { background: oklch(0.2 0.02 260); padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.875rem; font-family: var(--font-mono); }
+.markdown-output blockquote { border-left: 3px solid var(--color-primary-500); padding-left: 1rem; margin: 0.75rem 0; color: oklch(0.7 0.02 260); font-style: italic; }
+.markdown-output hr { border: none; border-top: 1px solid oklch(1 0 0 / 0.08); margin: 1.5rem 0; }
+
+/* ─── FOCUS RING ─── */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* ─── FILE UPLOAD ZONE ─── */
+.upload-zone {
+  border: 2px dashed oklch(0.4 0.05 260);
+  transition: all 0.3s ease;
+}
+
+.upload-zone:hover,
+.upload-zone.dragging {
+  border-color: var(--color-primary-500);
+  background: oklch(0.55 0.22 260 / 0.06);
+}
+
+/* ─── LOADING SPINNER ─── */
+.spinner {
+  border: 3px solid oklch(1 0 0 / 0.1);
+  border-top: 3px solid var(--color-primary-500);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

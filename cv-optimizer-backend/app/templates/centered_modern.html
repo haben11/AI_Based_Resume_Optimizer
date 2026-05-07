@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        body { font-family: 'Lato', sans-serif; }
+        .accent-text { color: {{ config.color }}; }
+        .accent-bg { background-color: {{ config.color }}; }
+        .accent-border { border-color: {{ config.color }}; }
+        @media print { body { -webkit-print-color-adjust: exact; } }
+    </style>
+</head>
+<body class="bg-[#fafafa] text-[#333] p-0 m-0">
+    <div class="max-w-[850px] mx-auto p-20 bg-white shadow-sm min-h-screen">
+        <header class="text-center mb-16">
+            <h1 class="text-5xl font-bold mb-4 italic tracking-tight">{{ data.full_name }}</h1>
+            <div class="flex justify-center flex-wrap gap-x-6 gap-y-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                {% for key, val in data.contact_info.items() %}
+                <span>{{ val }}</span>
+                {% endfor %}
+            </div>
+        </header>
+
+        <section class="mb-16">
+            <div class="flex items-center gap-6 mb-8">
+                <div class="flex-1 h-px bg-slate-100"></div>
+                <h2 class="text-xs font-black uppercase tracking-[0.3em] accent-text">Executive Intent</h2>
+                <div class="flex-1 h-px bg-slate-100"></div>
+            </div>
+            <p class="text-lg font-light text-slate-500 leading-relaxed text-center italic max-w-2xl mx-auto">
+                "{{ data.summary }}"
+            </p>
+        </section>
+
+        <section class="mb-16">
+            <div class="flex items-center gap-6 mb-12">
+                <div class="flex-1 h-px bg-slate-100"></div>
+                <h2 class="text-xs font-black uppercase tracking-[0.3em] accent-text">Experience History</h2>
+                <div class="flex-1 h-px bg-slate-100"></div>
+            </div>
+            <div class="space-y-16">
+                {% for job in data.experience %}
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-center italic">{{ job.title }}</h3>
+                    <ul class="space-y-4 max-w-xl mx-auto">
+                        {% for bullet in job.bullets %}
+                        <li class="text-sm text-slate-500 leading-relaxed text-center font-light">
+                            {{ bullet }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="grid grid-cols-2 gap-20">
+            <section>
+                <h2 class="text-xs font-black uppercase tracking-[0.3em] text-slate-300 mb-8 border-b pb-4">Specializations</h2>
+                <div class="flex flex-wrap gap-x-4 gap-y-2">
+                    {% for skill in data.skills %}
+                    <span class="text-[11px] font-bold text-slate-600 uppercase tracking-widest">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xs font-black uppercase tracking-[0.3em] text-slate-300 mb-8 border-b pb-4">Background</h2>
+                <div class="space-y-4">
+                    {% for edu in data.education %}
+                    <p class="text-[11px] font-bold text-slate-600 leading-relaxed uppercase tracking-wider">{{ edu }}</p>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

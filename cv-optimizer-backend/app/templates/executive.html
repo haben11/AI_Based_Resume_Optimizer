@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        h1, h2, h3 { font-family: 'Libre+Baskerville', serif; }
+        body { font-family: 'Montserrat', sans-serif; }
+        @media print {
+            body { -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <div class="max-w-[850px] mx-auto p-16">
+        <!-- Center Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-gray-900 mb-4">{{ data.full_name }}</h1>
+            <div class="flex justify-center flex-wrap gap-3 text-xs uppercase tracking-widest text-gray-500 font-semibold">
+                {% for key, val in data.contact_info.items() %}
+                    <span>{{ val }}</span>
+                    {% if not loop.last %}<span>|</span>{% endif %}
+                {% endfor %}
+            </div>
+        </header>
+
+        <div class="grid grid-cols-12 gap-12">
+            <!-- Left Sidebar -->
+            <aside class="col-span-4 border-r border-gray-100 pr-8">
+                <section class="mb-10">
+                    <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Contact</h2>
+                    <div class="space-y-2 text-sm text-gray-600">
+                        {% for key, val in data.contact_info.items() %}
+                            <p>{{ val }}</p>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="mb-10">
+                    <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Expertise</h2>
+                    <div class="space-y-3">
+                        {% for skill in data.skills %}
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-700 font-medium">{{ skill }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Academic</h2>
+                    {% for edu in data.education %}
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-800 font-bold leading-tight">{{ edu }}</p>
+                    </div>
+                    {% endfor %}
+                </section>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-span-8">
+                <section class="mb-12">
+                    <h2 class="text-xl font-bold border-b border-gray-900 pb-2 mb-6">Executive Profile</h2>
+                    <p class="text-gray-600 leading-relaxed italic text-base">
+                        "{{ data.summary }}"
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-xl font-bold border-b border-gray-900 pb-2 mb-8">Selected Career Highlights</h2>
+                    <div class="space-y-10">
+                        {% for job in data.experience %}
+                        <div class="relative pl-6 border-l-2 border-gray-100">
+                            <div class="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-gray-900"></div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-3">{{ job.title }}</h3>
+                            <ul class="space-y-3">
+                                {% for bullet in job.bullets %}
+                                <li class="text-sm text-gray-600 leading-relaxed text-justify">
+                                    {{ bullet }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

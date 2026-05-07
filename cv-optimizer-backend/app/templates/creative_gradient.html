@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        h1, h2 { font-family: 'Syne', sans-serif; }
+        body { font-family: 'Space Grotesk', sans-serif; }
+        .accent-gradient { background: linear-gradient(135deg, {{ config.color }}, #000); }
+        .accent-text { color: {{ config.color }}; }
+        .accent-bg { background-color: {{ config.color }}; }
+        @media print { body { -webkit-print-color-adjust: exact; } }
+    </style>
+</head>
+<body class="bg-black text-white p-0 m-0">
+    <div class="max-w-[850px] mx-auto min-h-screen bg-zinc-950 shadow-2xl relative overflow-hidden">
+        <!-- Decorative Gradient Sphere -->
+        <div class="absolute -top-40 -right-40 w-80 h-80 rounded-full accent-bg opacity-20 blur-[100px]"></div>
+        
+        <header class="p-16 relative z-10">
+            <h1 class="text-7xl font-black uppercase tracking-tighter mb-4 leading-none">{{ data.full_name }}</h1>
+            <div class="flex flex-wrap gap-8 text-xs font-bold uppercase tracking-widest text-zinc-500">
+                {% for key, val in data.contact_info.items() %}
+                <span>{{ val }}</span>
+                {% endfor %}
+            </div>
+        </header>
+
+        <div class="p-16 pt-0 grid grid-cols-12 gap-16 relative z-10">
+            <div class="col-span-12">
+                <div class="h-px w-full bg-zinc-800 mb-16"></div>
+            </div>
+
+            <aside class="col-span-4 space-y-16">
+                <section>
+                    <h2 class="text-xs font-black uppercase tracking-[0.4em] accent-text mb-8">Expertise</h2>
+                    <div class="flex flex-wrap gap-2">
+                        {% for skill in data.skills %}
+                        <span class="px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-full text-[10px] font-bold uppercase tracking-wider text-zinc-400">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-xs font-black uppercase tracking-[0.4em] accent-text mb-8">Education</h2>
+                    <div class="space-y-6">
+                        {% for edu in data.education %}
+                        <p class="text-xs font-bold text-zinc-300 leading-relaxed">{{ edu }}</p>
+                        {% endfor %}
+                    </div>
+                </section>
+            </aside>
+
+            <main class="col-span-8 space-y-20">
+                <section>
+                    <p class="text-2xl font-light text-zinc-400 leading-relaxed">
+                        <span class="text-white font-bold">{{ data.summary[:20] }}</span>{{ data.summary[20:] }}
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="text-xs font-black uppercase tracking-[0.4em] accent-text mb-12 text-right">Experience Portfolio</h2>
+                    <div class="space-y-16">
+                        {% for job in data.experience %}
+                        <div class="group">
+                            <div class="flex justify-between items-baseline mb-6">
+                                <h3 class="text-xl font-bold uppercase tracking-tight">{{ job.title }}</h3>
+                            </div>
+                            <ul class="space-y-4">
+                                {% for bullet in job.bullets %}
+                                <li class="text-sm text-zinc-500 leading-relaxed pl-4 border-l border-zinc-800 hover:border-zinc-400 transition-colors">
+                                    {{ bullet }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
